@@ -2,6 +2,7 @@ package br.com.rafaelmoura.spring_security_api.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -22,6 +23,14 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND.getReasonPhrase());
 
         return new ResponseEntity<>(genericException, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<GenericException> badCredentialsExceptionHandler(BadCredentialsException ex){
+        GenericException genericException = new GenericException(ex.getMessage(),
+                HttpStatus.UNAUTHORIZED.getReasonPhrase());
+
+        return new ResponseEntity<>(genericException, HttpStatus.UNAUTHORIZED);
     }
 
 }

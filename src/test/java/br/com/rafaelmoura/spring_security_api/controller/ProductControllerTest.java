@@ -113,6 +113,7 @@ public class ProductControllerTest {
         when(productService.findProductBySerialNumber(anyString())).thenReturn(productResponseDto);
 
         mockMvc.perform(get(URL_BASE.concat(API_VERSION).concat("/AAASD93847"))
+                        .header("Authorization", "Bearer ".concat(generateTokenUtils("admin@email.com")))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.serialNumber").value(productResponseDto.getSerialNumber()))
@@ -132,6 +133,7 @@ public class ProductControllerTest {
                 .thenThrow(new ProductNotFoundException("Produto nao localizado com o serialNumber informado"));
 
         mockMvc.perform(get(URL_BASE.concat(API_VERSION).concat("/AAASD93847"))
+                        .header("Authorization", "Bearer ".concat(generateTokenUtils("admin@email.com")))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code").value(HttpStatus.NOT_FOUND.getReasonPhrase()))
@@ -149,6 +151,7 @@ public class ProductControllerTest {
                 .thenThrow(new RuntimeException("Um erro genérico"));
 
         mockMvc.perform(get(URL_BASE.concat(API_VERSION).concat("/AAASD93847"))
+                        .header("Authorization", "Bearer ".concat(generateTokenUtils("admin@email.com")))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.code").value(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()))
@@ -166,6 +169,7 @@ public class ProductControllerTest {
 
         mockMvc.perform(post(URL_BASE.concat(API_VERSION))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .header("Authorization", "Bearer ".concat(generateTokenUtils("admin@email.com")))
                         .content(objectMapper.writeValueAsString(productRequestDto))
                         .characterEncoding(StandardCharsets.UTF_8))
                 .andExpect(status().isCreated())
@@ -185,6 +189,7 @@ public class ProductControllerTest {
         doNothing().when(productService).deleteProductBySerialNumber(anyString());
 
         mockMvc.perform(delete(URL_BASE.concat(API_VERSION).concat("/AAASD93847"))
+                        .header("Authorization", "Bearer ".concat(generateTokenUtils("admin@email.com")))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNoContent())
                 .andDo(print());
@@ -200,6 +205,7 @@ public class ProductControllerTest {
                 .when(productService).deleteProductBySerialNumber(anyString());
 
         mockMvc.perform(delete(URL_BASE.concat(API_VERSION) + "/AAASD93822")
+                        .header("Authorization", "Bearer ".concat(generateTokenUtils("admin@email.com")))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code").value(HttpStatus.NOT_FOUND.getReasonPhrase()))
@@ -216,6 +222,7 @@ public class ProductControllerTest {
         doThrow(new RuntimeException()).when(productService).deleteProductBySerialNumber(anyString());
 
         mockMvc.perform(delete(URL_BASE.concat(API_VERSION).concat("/AAASD93847"))
+                        .header("Authorization", "Bearer ".concat(generateTokenUtils("admin@email.com")))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.code").value(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()))
@@ -235,6 +242,7 @@ public class ProductControllerTest {
         when(productService.updateProductBySerialNumber(anyString(), any(ProductRequestDTO.class))).thenReturn(responseDTO);
 
         mockMvc.perform(put(URL_BASE.concat(API_VERSION).concat("/AAASD93847"))
+                        .header("Authorization", "Bearer ".concat(generateTokenUtils("admin@email.com")))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(productRequestDto))
                         .characterEncoding(StandardCharsets.UTF_8))
@@ -255,7 +263,7 @@ public class ProductControllerTest {
         Instant expiresAt = issuedAt.atZone(ZoneId.systemDefault()).plusMinutes(2).toInstant();
 
         return JWT.create()
-                .withIssuer("nome-da-aplicacao")
+                .withIssuer("spring-security-api")
                 .withClaim("email", username)
                 .withIssuedAt(issuedAt)
                 .withExpiresAt(expiresAt)
