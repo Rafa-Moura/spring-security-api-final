@@ -1,3 +1,6 @@
+server:
+  forward-headers-strategy: framework
+
 spring:
   application:
     name: spring-security-api
@@ -15,3 +18,12 @@ spring:
   security:
     jwt:
       secret: "minhachavesecreta"
+
+spring-doc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  schemes:
+    - http
+    - https
