@@ -20,10 +20,6 @@ spring:
       secret: "minhachavesecreta"
 
 spring-doc:
-  api-docs:
-    path: /api-docs
-  swagger-ui:
-    path: /swagger-ui.html
   schemes:
     - http
     - https
