@@ -12,31 +12,7 @@ jobs:
       - name: AI Code Review Action
         uses: aidar-freeed/ai-codereviewer@v2.7.0
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # The GITHUB_TOKEN is there by default so you just need to keep it like it is and not necessarily need to add it as secret as it will throw an error. [More Details](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret)
-          OPENAI_API_KEY: ${{ secrets.OPEN_API_KEY }}
-          OPENAI_API_MODEL: "gpt-3.5"
-          exclude: "**/*.json, **/*.md" # Optional: exclude patterns separated by commas
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Build project
-        run: mvn clean install
-
-      - name: Login docker hub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-
-      - name: Build docker image
-        run: docker build -t rfmoura/spring-security-api .
-
-      - name: Push image docker
-        run: docker push rfmoura/spring-security-api-prd
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          OPENAI_API_KEY: ${{secrets.OPEN_API_KEY}}
+          OPENAI_API_MODEL: "gpt-3"
+          exclude: "**/*.json, **/*.md"
