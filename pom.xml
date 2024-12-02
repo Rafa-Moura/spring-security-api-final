@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.rafaelmoura</groupId>
 	<artifactId>spring-security-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>spring-security-api</name>
 	<description>Aplicação para apresentação do Spring Security com JWT para live da FIAP</description>
 	<url/>

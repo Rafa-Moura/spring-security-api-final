@@ -2,7 +2,7 @@ package br.com.rafaelmoura.spring_security_api.security.authentication;
 
 import br.com.rafaelmoura.spring_security_api.model.entity.User;
 import br.com.rafaelmoura.spring_security_api.repository.UserRepository;
-import br.com.rafaelmoura.spring_security_api.security.config.SecurityConfiguration;
+import br.com.rafaelmoura.spring_security_api.security.utils.SecurityEndpointsUtils;
 import br.com.rafaelmoura.spring_security_api.security.userdetails.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -64,7 +64,7 @@ public class CustomUserAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean isPublicEndpoint(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        List<String> publicEndpoints = Arrays.asList(SecurityConfiguration.ENDPOINTS_WITHOUT_AUTH);
+        List<String> publicEndpoints = Arrays.asList(SecurityEndpointsUtils.ENDPOINTS_WITHOUT_AUTH);
         AntPathMatcher pathMatcher = new AntPathMatcher();
 
         return publicEndpoints.stream().anyMatch(endpoint -> pathMatcher.match(endpoint, requestURI));
