@@ -9,10 +9,8 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - name: AI Code Review Action
-        uses: aidar-freeed/ai-codereviewer@v2.7.0
-        with:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          OPENAI_API_KEY: ${{secrets.OPEN_API_KEY}}
-          OPENAI_API_MODEL: "gpt-3"
-          exclude: "**/*.json, **/*.md"
+      - name: Super-linter
+        uses: super-linter/super-linter@v7.2.0 # x-release-please-version
+        env:
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
